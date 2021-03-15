@@ -12,6 +12,9 @@ var passwordReset = document.getElementById('passwordReset')
 var userImg = document.getElementById('userImg')
 var userName = document.getElementById('userName')
 var todoForm = document.getElementById('todoForm')
+var todoList = document.getElementById('todoList')
+var todoCount = document.getElementById('todoCount')
+var ulTodoList = document.getElementById('ulTodoList')
 
 function toggleToRegister() {
   authForm.submitAuthForm.innerHTML = 'Cadastrar conta'
@@ -52,6 +55,11 @@ function showUserContent(user){
     userName.innerHTML = user.displayName
     userEmail.innerHTML = user.email
     hideItem(auth)
+
+    dbRefUsers.child(firebase.auth().currentUser.uid).on('value', (dataSnapshot) => {
+      fillTodoList(dataSnapshot);
+    })
+    
     showItem(userContent)
 }
  
