@@ -101,6 +101,7 @@ function deleteAccount(){
     })
   }
 }
+ 
 var actionCodeSettings = {
   url: 'https://fir-course-9ba2b.firebaseapp.com'
 }
