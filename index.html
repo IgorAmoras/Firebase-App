@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>TodoList</title>
+  <link rel="shortcut icon" href="img/todoListFavicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="center">
+      <img src="img/todoList.png">
+    </div>
+    <div id="loading">
+        <img src="img/loading.gif" alt="Animação de carregamento" >
+    </div>
+
+
+    <div id="auth" class="center">
+      <!--Formulário de autenticação-->
+      <form id="authForm">
+        <h3 id="authFormTitle">Acesse a sua conta para continuar</h3>
+
+        <label for="email">E-mail: </label>
+        <input type="email" placeholder="E-mail" id="email">
+
+        <label for="password">Senha: </label>
+        <input type="password" placeholder="Senha" id="password">
+
+        <button class="alternative" type="submit" id="submitAuthForm">Acessar</button>
+      </form>
+      <p id="passwordReset">
+        Esqueceu a senha?
+        <button  class="alternative" onclick="sendPasswordResetEmail()">Reaver senha</button>
+      </p>
+      <p id="register">
+        Não possui uma conta?
+        <button onclick="toggleToRegister()" class="alternative">Cadastrar uma nova conta</button>
+      </p>
+
+      <p id="access" class="startHidden">
+        Já possui uma conta?
+        <button onclick="toggleToAccess()" class="alternative">Acesse a sua conta</button>
+      </p>
+      <p>
+        Ou acesse pelo Google: <br />
+        <img src='img/google.png' alt="Google logo" onclick="signInWithGoogle()">
+      </p>
+    </div>
+
+
+    <div id="userContent" class="startHidden">
+      <hr>
+        <div id="userInfo" class="center">
+            <p>Usuário Autenticado</p>
+            <img id = "userImg">
+            <p id = "userName"></p>
+            <p id="userEmail"></p>
+            <p id="emailVerified"></p>
+            <div id="sendEmailVerificationDiv">
+              <button class="alternative" onclick="sendEmailVerification()">Verificar email</button>
+            </div>
+            <button class="alternative" onclick="updateInfo()">Alterar informações</button>
+            <button class="alternative" onclick="signOut()">Sair</button>
+            <br />
+            <button class = "danger" onclick="deleteAccount()">Deletar conta</button>
+        </div>
+      </hr>
+
+      <hr />
+      <div class= "center" id="todoForm">
+        <h3 id = "todoFormTitle">Adicionar Tarefa:</h3>
+        <label for="name">Tarefa:</label>
+        <input type="text" id="name" placeholder="Tarefa">
+        <button type="submit" id="submitTodoForm">Adicionar</button>
+
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+  <script src="/js/firebase.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
