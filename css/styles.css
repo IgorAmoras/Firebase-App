@@ -105,3 +105,10 @@ li:hover{
     border-radius: 5px;
     position: relative;
 }
+.alternative2{
+    background-color: slateblue;
+    float: right;
+    border-radius:5px ;
+    padding: 3px 3px 3px 3px;
+    margin: 0 0 0 4px;
+}

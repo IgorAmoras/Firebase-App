@@ -24,6 +24,7 @@ function fillTodoList(dataSnapshot) {
         var li = document.createElement('li')
         var span = document.createElement('span')
         span.appendChild(document.createTextNode(value.name))
+        span.setAttribute('id', `${elem.key}`)
         li.appendChild(span)
 
         var liRemoveBtn = document.createElement('button')
@@ -32,16 +33,43 @@ function fillTodoList(dataSnapshot) {
         liRemoveBtn.setAttribute('class', 'danger_btn')
         li.appendChild(liRemoveBtn)
 
+        var liUpdateBtn = document.createElement('button')
+        liUpdateBtn.appendChild(document.createTextNode('Atualizar'))
+        liUpdateBtn.setAttribute('onclick', 'updateTodo(\"' + elem.key + '\")')
+        liUpdateBtn.setAttribute('class', 'alternative2')
+        li.appendChild(liUpdateBtn)
+
         ulTodoList.appendChild(li)
     });
 }
 
 function removeTodo(key){
-    var confirmation = confirm('Deseja realmente deletar?')
+    console.log(key)
+    var selected = document.getElementById(key)
+    var confirmation = confirm('Deseja realmente deletar ' + selected.innerHTML + '?')
     if(confirmation){
         dbRefUsers.child(firebase.auth().currentUser.uid).child(key).remove()
         .catch((err)=> {
             showErr('Erro ao remover', err)
         })
     } 
+}
+
+function updateTodo(key) {
+    console.log('hey')
+    var selectedItem = document.getElementById(key)
+    var newName = prompt('Escolha um novo nome \"' + selectedItem.innerHTMl + '\".', selectedItem.innerHTML)
+    if(newName != ''){
+        var data = {
+            name: newName
+        }
+        dbRefUsers.child(firebase.auth().currentUser.uid).child(key).update(data)
+        .then(()=>{
+            console.log('Updated ' + data.name)
+        }).catch(()=>{
+            showErr('Erro ao atualizar a tarefa', err)
+        })
+    } else {
+        alert('Nome da tarefa em branco')
+    }
 }
