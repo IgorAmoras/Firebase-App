@@ -13,6 +13,7 @@ todoForm.onsubmit = (event) => {
     }else {
         alert('Erro, nome de tarefa em branco')
     }
+    todoForm.name.value = ''
 }
 
 function fillTodoList(dataSnapshot) {
@@ -44,7 +45,6 @@ function fillTodoList(dataSnapshot) {
 }
 
 function removeTodo(key){
-    console.log(key)
     var selected = document.getElementById(key)
     var confirmation = confirm('Deseja realmente deletar ' + selected.innerHTML + '?')
     if(confirmation){
@@ -52,13 +52,12 @@ function removeTodo(key){
         .catch((err)=> {
             showErr('Erro ao remover', err)
         })
-    } 
+    }  
 }
 
 function updateTodo(key) {
-    console.log('hey')
-    var selectedItem = document.getElementById(key)
-    var newName = prompt('Escolha um novo nome \"' + selectedItem.innerHTMl + '\".', selectedItem.innerHTML)
+    var selected = document.getElementById(key)
+    var newName = prompt('Escolha um novo nome para ' + selected.innerHTMl)
     if(newName != ''){
         var data = {
             name: newName
