@@ -94,13 +94,24 @@ function trackUpload(upload){
     (snapshot) => {
        console.log(snapshot)
        showItem(progressFeedback)
-       console.log(Math.round(snapshot.bytesTransferred/snapshot.totalBytes*100) + '%') 
        progress.value = snapshot.bytesTransferred/snapshot.totalBytes*100
     }, (err) => {
         showErr('There has been an error on the upload of the file', err)
     }, (sucess) => {
         console.log('Sucesso')
         hideItem(progress)
+        hideItem(playPauseBtn)
+    })
+    var playPauseUpload = true;
+    playPauseBtn.onclick = () => {
+        playPauseUpload = !playPauseUpload
+        if(playPauseUpload){
+            upload.resume()
+            playPauseBtn.innerHTML = "Pausar"
+        }
+        else{
+            upload.pause()
+            playPauseBtn.innerHTML = "Retomar"
+        }
     }
-    )
 }
