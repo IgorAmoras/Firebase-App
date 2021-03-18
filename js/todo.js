@@ -2,6 +2,7 @@ todoForm.onsubmit = (event) => {
     event.preventDefault()
     if(todoForm.name.value != '') {
         var file = todoForm.file.files[0];
+        console.log(file)
         if(file != null) {
             if(file.type.includes('image')){
                 var imageName = firebase.database().ref().push().key + '-' + file.name
