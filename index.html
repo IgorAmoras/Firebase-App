@@ -70,12 +70,18 @@
 
       <form class= "center" id="todoForm">
         <h3 id = "todoFormTitle">Adicionar Tarefa:</h3>
-        <input type="text" id="name" placeholder="Tarefa">
+        <label for = "file"> Imagem</label>
+        <input type="file" id = "file">
+        <input class = "center" type="text" id="name" placeholder="Tarefa">
         <button class = "danger" type="submit" id="submitTodoForm">Adicionar tarefa</button>
       </form>
       <hr />
 
       <div id="todoList">
+        <div class = "center">
+          <label for="search">Filtrar</label>
+          <input type="text" placeholder="filtrar" id = "search">
+        </div>
         <h3 id = "todoCount">
           Suas tarefas... 
         </h3>
@@ -87,6 +93,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js">
   <script src="js/todo.js"></script>
   <script src="js/firebase.js"></script>
   <script src="js/util.js"></script>

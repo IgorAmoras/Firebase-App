@@ -1,8 +1,18 @@
 todoForm.onsubmit = (event) => {
     event.preventDefault()
     if(todoForm.name.value != '') {
+        var file = todoForm.file.files[0];
+        if(file != null) {
+            if(file.type.includes('image')){
+                var imageName = firebase.database().ref().push().key + '-' + file.name
+                var imagePath = 'todoListFiles /' + firebase.auth().currentUser.uid + '/' + imageName
+                var storageRef = firebase.storage().ref(imagePath)
+                storageRef.put(file);
+            }
+        }
         var data = {
-            name: todoForm.name.value
+            name: todoForm.name.value,
+            nameLower: todoForm.name.value.toLowerCase()
         }
         dbRefUsers.child(firebase.auth().currentUser.uid).push(data)
         .then(() => {
@@ -60,11 +70,12 @@ function updateTodo(key) {
     var newName = prompt('Escolha um novo nome para ' + selected.innerHTMl)
     if(newName != ''){
         var data = {
-            name: newName
+            name: newName,
+            nameLower: newName.toLowerCase()
         }
         dbRefUsers.child(firebase.auth().currentUser.uid).child(key).update(data)
         .then(()=>{
-            console.log('Updated ' + data.name)
+            console.log('Updated ' + data.nameLower)
         }).catch(()=>{
             showErr('Erro ao atualizar a tarefa', err)
         })

@@ -15,6 +15,7 @@ var todoForm = document.getElementById('todoForm')
 var todoList = document.getElementById('todoList')
 var todoCount = document.getElementById('todoCount')
 var ulTodoList = document.getElementById('ulTodoList')
+var search = document.getElementById('search')
 
 function toggleToRegister() {
   authForm.submitAuthForm.innerHTML = 'Cadastrar conta'
@@ -56,13 +57,30 @@ function showUserContent(user){
     userEmail.innerHTML = user.email
     hideItem(auth)
 
-    dbRefUsers.child(firebase.auth().currentUser.uid).on('value', (dataSnapshot) => {
-      fillTodoList(dataSnapshot);
-    })
-    
+    getDefaultTodoList()
+
+    search.onkeyup = () => {
+      if(search.value != ''){
+          var searchText = search.value.toLowerCase()
+          dbRefUsers.child(user.uid)
+          .orderByChild('nameLower')
+          .startAt(searchText).endAt(searchText + '\uf8ff') //delimita resultados
+          .once('value').then((dataSnapshot) => {
+            fillTodoList(dataSnapshot);
+          })
+        } 
+      else{
+        getDefaultTodoList();
+      }
+    } 
     showItem(userContent)
 }
- 
+
+function getDefaultTodoList() {
+  dbRefUsers.child(firebase.auth().currentUser.uid).on('value', (dataSnapshot) => {
+    fillTodoList(dataSnapshot);
+  }) 
+}
 function showAuth(){
     authForm.email.value = ''
     authForm.password.value = ''
@@ -87,20 +105,23 @@ function updateInfo(){
   var newUserName = prompt('Insira um novo nome de usuário', userName.innerHTML)
   if(newUserName)   {
     showItem(loading)
+    var user = firebase.auth().currentUser;
     userName.innerHTML = newUserName 
-    firebase.auth().updateProfile({
+    user.updateProfile({
       displayName: newUserName
     }).catch((err) => {
       alert('Ocorreu um erro')
       console.log(err)
     })
   }
+  hideItem(loading)
 }
 
 function deleteAccount(){
   var confirmation = confirm('Deseja mesmo excluir sua conta?')
   if(confirmation){
-    firebase.auth().currentUser.delete()
+    var user = firebase.auth().currentUser;
+    user.delete()
     .then(()=>{
       alert('Conta excluída com sucesso!')
     })
@@ -109,7 +130,11 @@ function deleteAccount(){
     })
   }
 }
- 
+
+
+
+
+
 var actionCodeSettings = {
   url: 'https://fir-course-9ba2b.firebaseapp.com'
 }
