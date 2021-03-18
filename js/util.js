@@ -16,6 +16,8 @@ var todoList = document.getElementById('todoList')
 var todoCount = document.getElementById('todoCount')
 var ulTodoList = document.getElementById('ulTodoList')
 var search = document.getElementById('search')
+var progressFeedback = document.getElementById('progressFeedback')
+var progress = document.getElementById('progress')
 
 function toggleToRegister() {
   authForm.submitAuthForm.innerHTML = 'Cadastrar conta'

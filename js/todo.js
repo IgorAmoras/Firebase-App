@@ -4,11 +4,15 @@ todoForm.onsubmit = (event) => {
         var file = todoForm.file.files[0];
         console.log(file)
         if(file != null) {
-            if(file.type.includes('image')){
+            if(file.type.includes('application', 'image')){
                 var imageName = firebase.database().ref().push().key + '-' + file.name
-                var imagePath = 'todoListFiles /' + firebase.auth().currentUser.uid + '/' + imageName
+                var imagePath = 'todoListFiles/' + firebase.auth().currentUser.uid + '/' + imageName
                 var storageRef = firebase.storage().ref(imagePath)
-                storageRef.put(file);
+                var upload = storageRef.put(file);
+                trackUpload(upload)
+            }
+            else {
+                alert('Extensão de arquivo não suportada')
             }
         }
         var data = {
@@ -22,7 +26,7 @@ todoForm.onsubmit = (event) => {
             showErr('falha ao adicionar tarefa', err)
         })
     }else {
-        alert('Erro, nome de tarefa em branco')
+        alert('Nome da tarefa em branco')
     }
     todoForm.name.value = ''
 }
@@ -83,4 +87,20 @@ function updateTodo(key) {
     } else {
         alert('Nome da tarefa em branco')
     }
+}
+
+function trackUpload(upload){
+    upload.on('state_changed', 
+    (snapshot) => {
+       console.log(snapshot)
+       showItem(progressFeedback)
+       console.log(Math.round(snapshot.bytesTransferred/snapshot.totalBytes*100) + '%') 
+       progress.value = snapshot.bytesTransferred/snapshot.totalBytes*100
+    }, (err) => {
+        showErr('There has been an error on the upload of the file', err)
+    }, (sucess) => {
+        console.log('Sucesso')
+        hideItem(progress)
+    }
+    )
 }
