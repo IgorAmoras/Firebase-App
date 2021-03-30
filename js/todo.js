@@ -94,13 +94,14 @@ function trackUpload(upload){
     (snapshot) => {
        console.log(snapshot)
        showItem(progressFeedback)
-       progress.value = snapshot.bytesTransferred/snapshot.totalBytes*100
+       progress.value = (snapshot.bytesTransferred/snapshot.totalBytes*100).toFixed(2)
     }, (err) => {
         showErr('There has been an error on the upload of the file', err)
     }, (sucess) => {
         console.log('Sucesso')
         hideItem(progress)
         hideItem(playPauseBtn)
+        hideItem(cancelBtn)
     })
     var playPauseUpload = true;
     playPauseBtn.onclick = () => {
@@ -114,4 +115,10 @@ function trackUpload(upload){
             playPauseBtn.innerHTML = "Retomar"
         }
     }
+    cancelBtn.onclick = () => {
+        upload.cancel()
+        alert("Upload cancelado")
+        hideItem(progressFeedback)  
+    }
+
 }

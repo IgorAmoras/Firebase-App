@@ -19,6 +19,7 @@ var search = document.getElementById('search')
 var progressFeedback = document.getElementById('progressFeedback')
 var progress = document.getElementById('progress')
 var playPauseBtn = document.getElementById('playPauseBtn')
+var cancelBtn = document.getElementById('cancelBtn')
 
 function toggleToRegister() {
   authForm.submitAuthForm.innerHTML = 'Cadastrar conta'
